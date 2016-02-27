@@ -12,7 +12,6 @@
 */
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -24,8 +23,9 @@
 |
 */
 
-Route::group(['middleware' => ['web','auth']], function () {
+Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/', 'HomeController@index');
+    Route::get('/intelligences/{name}', ['as' => 'intelligences.show', 'uses' => 'IntelligenceController@show']);
 });
 
 Route::group(['middleware' => 'web'], function () {

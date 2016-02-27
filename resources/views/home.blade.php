@@ -3,13 +3,16 @@
 @section('content')
 <div class="container spark-screen">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Bienvenido</div>
-                <div class="panel-body">
-
-                </div>
-            </div>
+        <div class="col-xs-12">
+            <h1>Que deseas hacer hoy?</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            @foreach($intelligences as $intelligence)
+                <a href="{{ route('intelligences.show',$intelligence->id) }}"
+                   class="btn btn-primary">{{ $intelligence->name }}</a>
+            @endforeach
         </div>
     </div>
 </div>
