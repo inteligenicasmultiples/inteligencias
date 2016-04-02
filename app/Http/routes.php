@@ -24,8 +24,22 @@
 */
 
 Route::group(['middleware' => ['web', 'auth']], function () {
-    Route::get('/', 'HomeController@index');
-    Route::get('/intelligences/{name}', ['as' => 'intelligences.show', 'uses' => 'IntelligenceController@show']);
+
+    Route::get('/', 'IntelligenceController@index');
+
+    Route::group(['prefix' => '/intelligences'], function () {
+        Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
+        Route::group(['prefix' => '/{intelligenceId}'], function () {
+            Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
+            Route::group(['prefix' => '/tutorial'], function () {
+                Route::get('/', ['as' => 'tutorial.index', 'uses' => 'TutorialController@index']);
+                Route::get('/create', ['as' => 'tutorial.create', 'uses' => 'TutorialController@create']);
+                Route::post('/store', ['as' => 'tutorial.store', 'uses' => 'TutorialController@store']);
+                Route::get('/{tutorialId}', ['as' => 'tutorial.show', 'uses' => 'TutorialController@show']);
+
+            });
+        });
+    });
 });
 
 Route::group(['middleware' => 'web'], function () {
