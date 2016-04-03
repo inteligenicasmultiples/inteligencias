@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTutorialsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,19 @@ class CreateTutorialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tutorials', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('intelligence_id')->unsigned();
-            $table->string('title');
-            $table->text('body');
+            $table->integer('tutorial_id')->unsigned();
+            $table->string('message', 1024);
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('intelligence_id')
-                ->references('id')->on('intelligences')
+            $table->foreign('tutorial_id')
+                ->references('id')->on('tutorials')
                 ->onDelete('cascade');
         });
     }
@@ -37,6 +36,6 @@ class CreateTutorialsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tutorials');
+        Schema::drop('comments');
     }
 }

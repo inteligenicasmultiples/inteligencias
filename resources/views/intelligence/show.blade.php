@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-
 @section('content')
     <div class="container spark-screen">
         <div class="row">
             <div class="col-xs-12">
                 <h2>
                     {{ $intelligence->name }}
-                    <a class="btn btn-primary pull-right" href="{{ route('tutorial.create',$intelligence->id) }}">Crear tutorial</a>
+                    <a class="btn btn-primary pull-right" href="{{ route('tutorial.create',$intelligence->slug) }}">Crear
+                        tutorial</a>
                 </h2>
             </div>
         </div>
@@ -16,21 +16,15 @@
             <li class="active"> {{ $intelligence->name }}</li>
         </ol>
         <br>
-        @forelse($intelligence->tutorials as $tutorial)
+        @foreach($tutorials as $tutorial)
             <div class="row">
                 <div class="col-xs-12">
-                    <div> {{ $tutorial->name }}</div>
-                    <div> {{ $tutorial->body }}</div>
+                    <div> <a href="{{ route('tutorial.show',[$intelligence->slug,$tutorial->id]) }}">{{ $tutorial->title }}</a> </div>
+                    <div> {!! $tutorial->body !!}</div>
+                    <hr>
                 </div>
             </div>
-        @empty
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class=" alert alert-info">
-                        No hay ningun tutorial aun. Se el primero en crear uno
-                    </div>
-                </div>
-            </div>
-        @endforelse
+        @endforeach
+        {!! $tutorials->render() !!}
     </div>
 @endsection

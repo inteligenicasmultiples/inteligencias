@@ -2,26 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Intelligence;
-use Illuminate\Http\Request;
-
+use App\Comment;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Intelligence;
+use App\Tutorial;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laracasts\Flash\Flash;
 
 class TutorialController extends Controller
 {
-    public function create($intelligenceId)
+    public function show($intelligenceSlug, $tutorialId)
     {
-        $intelligence = Intelligence::findOrFail($intelligenceId);
+        $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
+        $tutorial = Tutorial::where('intelligence_id', $intelligence->id)->findOrFail($tutorialId);
+        $comments = Comment::where('tutorial_id', $tutorial->id)->paginate(15);
+
+        return view('intelligence.tutorial.show', compact('intelligence', 'tutorial','comments'));
+    }
+
+
+    public function create($intelligenceSlug)
+    {
+        $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
 
         return view('intelligence.tutorial.create', compact('intelligence'));
     }
 
-    public function store(Request $request, $intelligenceId)
+    public function store(Request $request, $intelligenceSlug)
     {
-        $intelligence = Intelligence::findOrFail($intelligenceId);
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+        ]);
 
-        return $request->all();
+        $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
 
+        $tutorial = new Tutorial;
+        $tutorial->user_id = Auth::user()->id;
+        $tutorial->intelligence_id = $intelligence->id;
+        $tutorial->title = $request->title;
+        $tutorial->body = $request->body;
+        $tutorial->save();
+
+        //return $request->all();
+
+        Flash::success('Tutorial creado exitosamente.');
+
+        return redirect()->route('intelligence.show', $intelligenceSlug);
     }
 }

@@ -16,13 +16,13 @@
                 </h2>
                 <ol class="breadcrumb">
                     <li><a href="{{ route('intelligence.index') }}">Inteligencias</a></li>
-                    <li><a href="{{ route('intelligence.show',$intelligence->id) }}"> {{ $intelligence->name }}</a></li>
+                    <li><a href="{{ route('intelligence.show',$intelligence->slug) }}"> {{ $intelligence->name }}</a></li>
                     <li class="active"> Crear tutorial</li>
                 </ol>
             </div>
         </div>
         <br>
-        <form action="{{ route('tutorial.store',$intelligence->id) }}" role="form" method="POST">
+        <form action="{{ route('tutorial.store',$intelligence->slug) }}" role="form" method="POST">
             {{ csrf_field() }}
             <div class="form-group">
                 <input name="title" type="text" required="required" class="form-control"

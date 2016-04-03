@@ -15,14 +15,26 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt('123456'),
         'remember_token' => str_random(10),
     ];
 });
 
-
 $factory->define(App\Intelligence::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
+    ];
+});
+
+$factory->define(App\Tutorial::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->realText(rand(20, 100)),
+        'body' => $faker->realText
+    ];
+});
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'message' => $faker->realText(rand(50, 1024))
     ];
 });

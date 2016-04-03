@@ -22,26 +22,26 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
-Route::group(['middleware' => ['web', 'auth']], function () {
-
-    Route::get('/', 'IntelligenceController@index');
-
-    Route::group(['prefix' => '/intelligences'], function () {
-        Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
-        Route::group(['prefix' => '/{intelligenceId}'], function () {
-            Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
-            Route::group(['prefix' => '/tutorial'], function () {
-                Route::get('/', ['as' => 'tutorial.index', 'uses' => 'TutorialController@index']);
-                Route::get('/create', ['as' => 'tutorial.create', 'uses' => 'TutorialController@create']);
-                Route::post('/store', ['as' => 'tutorial.store', 'uses' => 'TutorialController@store']);
-                Route::get('/{tutorialId}', ['as' => 'tutorial.show', 'uses' => 'TutorialController@show']);
-
-            });
-        });
-    });
-});
-
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 });
+
+
+Route::group(['middleware' => ['web', 'auth']], function () {
+
+    Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
+    Route::group(['prefix' => '/{intelligenceSlug}'], function () {
+        Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
+        Route::group(['prefix' => '/tutorial'], function () {
+            Route::get('/', ['as' => 'tutorial.index', 'uses' => 'TutorialController@index']);
+            Route::get('/create', ['as' => 'tutorial.create', 'uses' => 'TutorialController@create']);
+            Route::post('/store', ['as' => 'tutorial.store', 'uses' => 'TutorialController@store']);
+            Route::group(['prefix' => '/{tutorialId}'], function () {
+                Route::get('/', ['as' => 'tutorial.show', 'uses' => 'TutorialController@show']);
+                Route::post('/comment', ['as' => 'comment.store', 'uses' => 'CommentController@store']);
+            });
+        });
+    });
+
+});
+

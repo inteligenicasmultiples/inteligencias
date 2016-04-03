@@ -15,6 +15,8 @@ class CreateIntelligencesTable extends Migration
         Schema::create('intelligences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug');
+            $table->string('description', 1024);
             $table->timestamps();
         });
     }
