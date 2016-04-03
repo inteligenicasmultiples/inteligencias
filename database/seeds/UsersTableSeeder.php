@@ -17,6 +17,12 @@ class UsersTableSeeder extends Seeder
                 'email' => 'luismec90@gmail.com'
             ]);
 
+        factory('App\User')
+            ->create([
+                'name' => 'Luisa Suarez',
+                'email' => 'psicologacognitivaluisa@gmail.com'
+            ]);
+
         for ($i = 0; $i <= 100; $i++) {
             factory('App\User')
                 ->create();
