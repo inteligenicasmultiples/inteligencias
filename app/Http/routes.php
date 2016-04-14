@@ -29,6 +29,9 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => ['web', 'auth']], function () {
 
+    Route::get('/mi-perfil', ['as' => 'user.profile', 'uses' => 'UserController@profile']);
+    Route::post('/mi-perfil', ['as' => 'user.update', 'uses' => 'UserController@update']);
+
     Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
     Route::group(['prefix' => '/{intelligenceSlug}'], function () {
         Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
