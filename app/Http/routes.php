@@ -27,21 +27,26 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/mi-perfil', ['as' => 'user.profile', 'uses' => 'UserController@profile']);
-    Route::post('/mi-perfil', ['as' => 'user.update', 'uses' => 'UserController@update']);
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/mi-perfil', ['as' => 'user.profile', 'uses' => 'UserController@profile']);
+        Route::post('/mi-perfil', ['as' => 'user.update', 'uses' => 'UserController@update']);
+    });
 
     Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
     Route::group(['prefix' => '/{intelligenceSlug}'], function () {
         Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
         Route::group(['prefix' => '/tutorial'], function () {
             Route::get('/', ['as' => 'tutorial.index', 'uses' => 'TutorialController@index']);
-            Route::get('/create', ['as' => 'tutorial.create', 'uses' => 'TutorialController@create']);
-            Route::post('/store', ['as' => 'tutorial.store', 'uses' => 'TutorialController@store']);
+            Route::get('/create',
+                ['as' => 'tutorial.create', 'middleware' => ['auth'], 'uses' => 'TutorialController@create']);
+            Route::post('/store',
+                ['as' => 'tutorial.store', 'middleware' => ['auth'], 'uses' => 'TutorialController@store']);
             Route::group(['prefix' => '/{tutorialId}'], function () {
                 Route::get('/', ['as' => 'tutorial.show', 'uses' => 'TutorialController@show']);
-                Route::post('/comment', ['as' => 'comment.store', 'uses' => 'CommentController@store']);
+                Route::post('/comment',
+                    ['as' => 'comment.store', 'middleware' => ['auth'], 'uses' => 'CommentController@store']);
             });
         });
     });
