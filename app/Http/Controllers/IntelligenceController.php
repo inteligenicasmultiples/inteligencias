@@ -25,4 +25,9 @@ class IntelligenceController extends Controller
 
         return view('intelligence.show', compact('intelligence', 'tutorials'));
     }
+
+    public function familyActivities()
+    {
+        return view('pages.family_activities');
+    }
 }

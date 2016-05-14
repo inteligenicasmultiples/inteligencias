@@ -35,6 +35,8 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
+    Route::get('/actividades-familiares',
+        ['as' => 'family.activities', 'uses' => 'IntelligenceController@familyActivities']);
     Route::group(['prefix' => '/{intelligenceSlug}'], function () {
         Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
         Route::group(['prefix' => '/tutorial'], function () {

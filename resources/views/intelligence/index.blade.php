@@ -9,13 +9,15 @@
         </div>
         @foreach ($intelligences->chunk(4) as $chunk)
             <div class="row">
-                @foreach ($chunk as $intelligence)
+                @foreach ($chunk as $index => $intelligence)
                     <div class="col-sm-3">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">{{ $intelligence->name }}</h3>
                             </div>
                             <div class="panel-body">
+                                <img src="http://lorempixel.com/400/300/sports/{{ $index }}" alt=""
+                                     class="img-responsive img-rounded">
                                 <p>{{ $intelligence->description }}</p>
 
                                 <div class="row">
