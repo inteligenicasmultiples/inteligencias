@@ -142,19 +142,24 @@
                 <div class="text-center">
                     <div id="webcam">
                     </div>
-                    <div id="setupPanel">
-                        <select id="cameraNames" size="1" onChange="changeCamera()" style="width:145px;font-size:10px;height:25px;">
-                        </select>
-                        <select id="microphoneNames" size="1" onChange="changeMicrophone()" style="width:128px;font-size:10px;height:25px;">
-                        </select>
+                    <div class="clearfix">
                     </div>
-                    <div class="form-group text-center">
-                        <br>
-                        <button class="btn btn-danger">Grabar</button>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <select id="cameraNames" size="1" onChange="changeCamera()" class="form-control">
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select id="microphoneNames" size="1" onChange="changeMicrophone()" class="form-control">
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger">Grabar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </form>
     </div>
 @endsection
