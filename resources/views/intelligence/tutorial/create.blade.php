@@ -83,7 +83,7 @@
 			$('#microphoneNames').val(microphone);
 		}
 		function promptWillShow() {
-			alert('A security dialog will be shown. Please click on ALLOW.');
+			//alert('A security dialog will be shown. Please click on ALLOW.');
 		}
 		function setVolume(value) {
 			value=parseInt(32 * value / 100) + 1;
@@ -147,6 +147,10 @@
                         </select>
                         <select id="microphoneNames" size="1" onChange="changeMicrophone()" style="width:128px;font-size:10px;height:25px;">
                         </select>
+                    </div>
+                    <div class="form-group text-center">
+                        <br>
+                        <button class="btn btn-danger">Grabar</button>
                     </div>
                 </div>
             </div>
