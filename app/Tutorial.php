@@ -15,4 +15,11 @@ class Tutorial extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function getYoutubeId()
+    {
+        parse_str(parse_url( $this->url, PHP_URL_QUERY ), $vars);
+
+        return $vars['v'];
+    }
 }

@@ -24,7 +24,9 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        {!! $tutorial->body !!}
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ $tutorial->getYoutubeId() }}"></iframe>
+                        </div>
                     </div>
                 </div>
 
@@ -33,7 +35,10 @@
                 <form action="{{ route('comment.store',[$intelligence->slug,$tutorial->id]) }}" role="form" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <textarea id="message" name="message" class="form-control" required="required"></textarea>
+                        <input name="url" placeholder="Url vdel video" class="form-control" required="required">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Mensaje" class="form-control" required="required"></textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary pull-right">Enviar comentario</button>
@@ -47,7 +52,20 @@
                 <table class="table">
                     @foreach($comments as $comment)
                         <tr>
-                            <td>{!! $comment->message !!}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ $comment->getYoutubeId() }}"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        {!! $comment->message !!}
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                 </table>

@@ -17,7 +17,7 @@ class CreateTutorialsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('intelligence_id')->unsigned();
             $table->string('title');
-            $table->text('body');
+            $table->string('url');
             $table->timestamps();
 
             $table->foreign('user_id')

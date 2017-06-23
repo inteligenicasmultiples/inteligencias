@@ -29,12 +29,13 @@ $factory->define(App\Intelligence::class, function (Faker\Generator $faker) {
 $factory->define(App\Tutorial::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->realText(rand(20, 100)),
-        'body' => $faker->realText
+        'url' => 'https://www.youtube.com/watch?v=BKorP55Aqvg'
     ];
 });
 
 $factory->define(App\Comment::class, function (Faker\Generator $faker) {
     return [
+        'url' => 'https://www.youtube.com/watch?v=tGgCqGm_6Hs',
         'message' => $faker->realText(rand(50, 1024))
     ];
 });

@@ -10,4 +10,11 @@ class Comment extends Model
     {
         return $this->belongsTo('App\Tutorial');
     }
+
+    public function getYoutubeId()
+    {
+        parse_str(parse_url( $this->url, PHP_URL_QUERY ), $vars);
+
+        return $vars['v'];
+    }
 }

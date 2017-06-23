@@ -33,7 +33,7 @@ class TutorialController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required',
+            'url' => 'required',
         ]);
 
         $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
@@ -42,7 +42,7 @@ class TutorialController extends Controller
         $tutorial->user_id = Auth::user()->id;
         $tutorial->intelligence_id = $intelligence->id;
         $tutorial->title = $request->title;
-        $tutorial->body = $request->body;
+        $tutorial->url = $request->url;
         $tutorial->save();
 
         //return $request->all();
