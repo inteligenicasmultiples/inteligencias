@@ -133,18 +133,20 @@
                         </div>
                         <div class="clearfix"></div>
                         <span title="{{ $tutorial->created_at }}">{{ $tutorial->created_at->diffForHumans() }}<span>
-                        <div class="likes-div">
-                                @if( $tutorial->myLikes->count())
-                                    <a class="link unlike" data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}">Ya
-                                        no me gusta </a>
-                                @else
-                                    <a class="link like" data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}"> Me
-                                        gusta </a>
-                                @endif
-                                <i class="fa fa-thumbs-o-up {{ $tutorial->likes->count() ? "like-icon" :"" }}"
-                                   data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}"></i>
-                                <span class="counter">{{ $tutorial->likes->count() }} </span>
-                        </div>
+                        @if (Auth::check())
+                            <div class="likes-div">
+                                    @if( $tutorial->myLikes->count())
+                                        <a class="link unlike" data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}">Ya
+                                            no me gusta </a>
+                                    @else
+                                        <a class="link like" data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}"> Me
+                                            gusta </a>
+                                    @endif
+                                    <i class="fa fa-thumbs-o-up {{ $tutorial->likes->count() ? "like-icon" :"" }}"
+                                       data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}"></i>
+                                    <span class="counter">{{ $tutorial->likes->count() }} </span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -183,18 +185,20 @@
                                         {!! $comment->message !!}
                                         <div class="clearfix"></div>
                                         <span title="{{ $tutorial->created_at }}">{{ $comment->created_at->diffForHumans() }}<span>
-                                        <div class="likes-div">
-                                                @if( $comment->myLikes->count())
-                                                    <a class="link unlike" data-type="comment" data-comment-id="{{ $comment->id }}">Ya
-                                                        no me gusta </a>
-                                                @else
-                                                    <a class="link like" data-type="comment" data-comment-id="{{ $comment->id }}"> Me
-                                                        gusta </a>
-                                                @endif
-                                                <i class="fa fa-thumbs-o-up {{ $comment->likes->count() ? "like-icon" :"" }}"
-                                                   data-type="comment" data-comment-id="{{ $comment->id }}"></i>
-                                                <span class="counter">{{ $comment->likes->count() }} </span>
-                                        </div>
+                                        @if (Auth::check())
+                                            <div class="likes-div">
+                                                    @if( $comment->myLikes->count())
+                                                        <a class="link unlike" data-type="comment" data-comment-id="{{ $comment->id }}">Ya
+                                                            no me gusta </a>
+                                                    @else
+                                                        <a class="link like" data-type="comment" data-comment-id="{{ $comment->id }}"> Me
+                                                            gusta </a>
+                                                    @endif
+                                                    <i class="fa fa-thumbs-o-up {{ $comment->likes->count() ? "like-icon" :"" }}"
+                                                       data-type="comment" data-comment-id="{{ $comment->id }}"></i>
+                                                    <span class="counter">{{ $comment->likes->count() }} </span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
