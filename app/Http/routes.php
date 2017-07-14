@@ -35,8 +35,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::get('/', ['as' => 'intelligence.index', 'uses' => 'IntelligenceController@index']);
-    Route::get('/actividades-familiares',
-        ['as' => 'family.activities', 'uses' => 'IntelligenceController@familyActivities']);
+    Route::get('/actividades-familiares', ['as' => 'family.activities', 'uses' => 'IntelligenceController@familyActivities']);
     Route::group(['prefix' => '/{intelligenceSlug}'], function () {
         Route::get('/', ['as' => 'intelligence.show', 'uses' => 'IntelligenceController@show']);
         Route::group(['prefix' => '/tutorial'], function () {
@@ -49,9 +48,11 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/', ['as' => 'tutorial.show', 'uses' => 'TutorialController@show']);
                 Route::post('/comment',
                     ['as' => 'comment.store', 'middleware' => ['auth'], 'uses' => 'CommentController@store']);
+                    Route::post('/like', ['as' => 'post.like', 'uses' => 'LikeController@likePost']);
+                    Route::post('/unlike', ['as' => 'post.unlike', 'uses' => 'LikeController@unlikePost']);
+                    Route::get('/like/who', ['as' => 'post.like.who', 'uses' => 'LikeController@whoLikePost']);
             });
         });
     });
 
 });
-

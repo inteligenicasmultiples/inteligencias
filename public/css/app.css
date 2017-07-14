@@ -1,4 +1,26 @@
 footer {
   margin-top: 50px; }
 
-/*# sourceMappingURL=app.css.map */
+.likes-div .fa {
+  margin-left: 15px;
+  color: #03658c;
+  font-size: 15px;
+}
+
+.like-icon {
+    cursor: pointer;
+}
+
+.link {
+  color: #03658c;
+  cursor: pointer;
+}
+
+.user-list {
+    padding-left: 0;
+}
+
+.user-list li {
+    margin-bottom: 0;
+    list-style: none;
+}

@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Auth;
+
 class Tutorial extends Model
 {
     public function intelligence()
@@ -22,4 +24,16 @@ class Tutorial extends Model
 
         return $vars['v'];
     }
+
+    public function likes()
+    {
+        return $this->hasMany('App\Like');
+    }
+
+    public function myLikes()
+    {
+        return $this->hasMany('App\Like')
+            ->where('user_id', Auth::user()->id);
+    }
+
 }

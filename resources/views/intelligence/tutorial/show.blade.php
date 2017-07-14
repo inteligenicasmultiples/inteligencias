@@ -2,11 +2,115 @@
 
 @section('js')
     <script src="//cdn.ckeditor.com/4.5.8/standard/ckeditor.js"></script>
-    <script></script>
+    <script>
+
+    var likePostPath = '{{ route('post.like',[$intelligence->slug, $tutorial->id]) }}';
+    var unlikePostPath = '{{ route('post.unlike',[$intelligence->slug, $tutorial->id]) }}';
+    var whoLikePostPath = '{{ route('post.like.who',[$intelligence->slug, $tutorial->id]) }}';
+
+    $(document).on("click", '.like:not(.disabled)', function () {
+        $(".like-icon").popover('destroy');
+        var link = $(this);
+        link.removeClass('like').addClass('unlike disabled').html('Ya no me gusta');
+        if ($(this).attr('data-type') == 'tutorial') {
+            var type = 'tutorial';
+            var postId = $(this).attr('data-tutorial-id');
+        } else {
+            var type = 'comment';
+            var postId = $(this).attr('data-comment-id');
+        }
+        $.ajax({
+            url: likePostPath,
+            method: 'POST',
+            data: {
+                _token: _token,
+                type: type,
+                postId: postId,
+            }
+        }).done(function (data) {
+
+            link.parent().find('.counter').html(data);
+            link.parent().find('.fa-thumbs-o-up').addClass("like-icon");
+            link.removeClass('disabled');
+        }).fail(function (data) {
+            console.log('Error');
+        });
+    });
+
+    $(document).on("click", '.unlike:not(.disabled)', function () {
+        var link = $(this);
+        link.removeClass('unlike disabled').addClass('like').html('Me gusta');
+        if ($(this).attr('data-type') == 'tutorial') {
+            var type = 'tutorial';
+            var postId = $(this).attr('data-tutorial-id');
+        } else {
+            var type = 'comment';
+            var postId = $(this).attr('data-comment-id');
+        }
+        $.ajax({
+            url: unlikePostPath,
+            method: 'POST',
+            data: {
+                _token: _token,
+                type: type,
+                postId: postId,
+            }
+        }).done(function (data) {
+            if (data == 0) {
+                $(".like-icon").popover('destroy');
+                link.parent().find('.fa-thumbs-o-up').removeClass("like-icon");
+            }
+            link.parent().find('.counter').html(data);
+            link.removeClass('disabled');
+        }).fail(function (data) {
+            console.log('Error');
+        });
+    });
+
+    $(document).on("click", '.like-icon', function () {
+        var likeIcon = $(this);
+        if ($(this).attr('data-type') == 'tutorial') {
+            var type = 'tutorial';
+            var postId = $(this).attr('data-tutorial-id');
+        } else {
+            var type = 'comment';
+            var postId = $(this).attr('data-comment-id');
+        }
+        $.ajax({
+            url: whoLikePostPath,
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                type: type,
+                postId: postId,
+            }
+        }).done(function (data) {
+            var userList = "<ul class='user-list'>";
+            $.each(data, function (index, like) {
+                userList += "<li>" + like.user.name  + "</li>"
+            });
+            userList += "</ul>";
+
+            $(".like-icon").popover('destroy');
+
+            var genericCloseBtnHtml = '<button onclick="$(this).closest(\'div.popover\').popover(\'hide\');" type="button" class="close" aria-hidden="true">&times;</button>';
+            likeIcon.popover({
+                html: true,
+                content: userList,
+                title: 'Usuarios ' + genericCloseBtnHtml,
+                placement: 'top'
+            }).popover('show');
+
+        }).fail(function (data) {
+            console.log('Error');
+        });
+    });
+
+    </script>
 @stop
 
 @section('content')
-    <div class="container">
+    <div class="container js-like-container">
         <div class="row">
             <div class="col-xs-12">
                 <div class="row">
@@ -26,6 +130,20 @@
                     <div class="col-xs-12">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ $tutorial->getYoutubeId() }}"></iframe>
+                        </div>
+                        <div class="clearfix"></div>
+                        <span title="{{ $tutorial->created_at }}">{{ $tutorial->created_at->diffForHumans() }}<span>
+                        <div class="likes-div">
+                                @if( $tutorial->myLikes->count())
+                                    <a class="link unlike" data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}">Ya
+                                        no me gusta </a>
+                                @else
+                                    <a class="link like" data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}"> Me
+                                        gusta </a>
+                                @endif
+                                <i class="fa fa-thumbs-o-up {{ $tutorial->likes->count() ? "like-icon" :"" }}"
+                                   data-type="tutorial" data-tutorial-id="{{ $tutorial->id }}"></i>
+                                <span class="counter">{{ $tutorial->likes->count() }} </span>
                         </div>
                     </div>
                 </div>
@@ -63,6 +181,20 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         {!! $comment->message !!}
+                                        <div class="clearfix"></div>
+                                        <span title="{{ $tutorial->created_at }}">{{ $comment->created_at->diffForHumans() }}<span>
+                                        <div class="likes-div">
+                                                @if( $comment->myLikes->count())
+                                                    <a class="link unlike" data-type="comment" data-comment-id="{{ $comment->id }}">Ya
+                                                        no me gusta </a>
+                                                @else
+                                                    <a class="link like" data-type="comment" data-comment-id="{{ $comment->id }}"> Me
+                                                        gusta </a>
+                                                @endif
+                                                <i class="fa fa-thumbs-o-up {{ $comment->likes->count() ? "like-icon" :"" }}"
+                                                   data-type="comment" data-comment-id="{{ $comment->id }}"></i>
+                                                <span class="counter">{{ $comment->likes->count() }} </span>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
