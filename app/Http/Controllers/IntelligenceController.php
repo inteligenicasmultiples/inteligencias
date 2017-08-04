@@ -20,8 +20,12 @@ class IntelligenceController extends Controller
 
     public function show($intelligenceSlug)
     {
-        $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
-        $tutorials = Tutorial::where('intelligence_id', $intelligence->id)->orderBy('id','DESC')->paginate(10);
+        $intelligence = Intelligence::where('slug', $intelligenceSlug)
+            ->firstOrFail();
+        $tutorials = Tutorial::where('intelligence_id', $intelligence->id)
+            ->where('visible', 1)
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
 
         return view('intelligence.show', compact('intelligence', 'tutorials'));
     }
