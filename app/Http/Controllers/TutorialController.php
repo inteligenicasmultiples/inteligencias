@@ -39,7 +39,6 @@ class TutorialController extends Controller
         $tutorialId = session('tutorialId');
         $tutorial = Tutorial::findOrFail($tutorialId);
         $tutorial->title = $request->title;
-        $tutorial->url = $request->url;
         $tutorial->visible = 1;
         $tutorial->save();
 
