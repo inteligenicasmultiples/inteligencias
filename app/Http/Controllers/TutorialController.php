@@ -40,6 +40,7 @@ class TutorialController extends Controller
         $tutorial = Tutorial::findOrFail($tutorialId);
         $tutorial->title = $request->title;
         $tutorial->url = $request->url;
+        $tutorial->visible = 1;
         $tutorial->save();
 
         Flash::success('Tutorial creado exitosamente.');
@@ -55,6 +56,7 @@ class TutorialController extends Controller
             $tutorial = new Tutorial;
             $tutorial->user_id = Auth::user()->id;
             $tutorial->intelligence_id = $intelligence->id;
+            $tutorial->visible = 0;
             $tutorial->save();
 
             $files = $request->file('files');
