@@ -128,8 +128,12 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ $tutorial->getYoutubeId() }}"></iframe>
+                        <div class="text-center">
+                            <video  controls >
+                                  <source src="{{ $tutorial->getVideoPath() }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                                </video>
+
                         </div>
                         <div class="clearfix"></div>
                         <span title="{{ $tutorial->created_at }}">{{ $tutorial->created_at->diffForHumans() }}<span>

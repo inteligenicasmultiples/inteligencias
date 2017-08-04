@@ -33,22 +33,37 @@ class TutorialController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'url' => 'required',
         ]);
 
         $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
-
-        $tutorial = new Tutorial;
-        $tutorial->user_id = Auth::user()->id;
-        $tutorial->intelligence_id = $intelligence->id;
+        $tutorialId = session('tutorialId');
+        $tutorial = Tutorial::findOrFail($tutorialId);
         $tutorial->title = $request->title;
         $tutorial->url = $request->url;
         $tutorial->save();
 
-        //return $request->all();
-
         Flash::success('Tutorial creado exitosamente.');
 
         return redirect()->route('intelligence.show', $intelligenceSlug);
+    }
+
+    public function storeVideo(Request $request, $intelligenceSlug)
+    {
+        $intelligence = Intelligence::where('slug', $intelligenceSlug)->firstOrFail();
+
+        if ($request->hasFile('files')) {
+            $tutorial = new Tutorial;
+            $tutorial->user_id = Auth::user()->id;
+            $tutorial->intelligence_id = $intelligence->id;
+            $tutorial->save();
+
+            $files = $request->file('files');
+            foreach ($files as $file) {
+                $fileName = 'tutorial_' . $tutorial->id . '.mp4';
+                $file->move('uploads', $fileName);
+            }
+
+            session(['tutorialId' => $tutorial->id]);
+        }
     }
 }

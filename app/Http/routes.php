@@ -42,6 +42,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/', ['as' => 'tutorial.index', 'uses' => 'TutorialController@index']);
             Route::get('/create',
                 ['as' => 'tutorial.create', 'middleware' => ['auth'], 'uses' => 'TutorialController@create']);
+            Route::post('/store-video',
+                ['as' => 'tutorial.store.video', 'middleware' => ['auth'], 'uses' => 'TutorialController@storeVideo']);
             Route::post('/store',
                 ['as' => 'tutorial.store', 'middleware' => ['auth'], 'uses' => 'TutorialController@store']);
             Route::group(['prefix' => '/{tutorialId}'], function () {
