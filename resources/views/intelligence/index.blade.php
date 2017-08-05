@@ -16,7 +16,7 @@
                                 <h3 class="panel-title">{{ $intelligence->name }}</h3>
                             </div>
                             <div class="panel-body">
-                                <img src="http://lorempixel.com/400/300/sports/{{ $index }}" alt=""
+                                <img src="http://lorempixel.com/400/300/sports/" alt=""
                                      class="img-responsive img-rounded">
                                 <p>{{ $intelligence->description }}</p>
 
