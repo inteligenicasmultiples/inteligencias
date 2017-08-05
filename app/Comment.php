@@ -29,4 +29,9 @@ class Comment extends Model
         return $this->hasMany('App\Like')
             ->where('user_id', Auth::user()->id);
     }
+
+    public function getVideoPath()
+    {
+        return '/uploads/comments/comment_' . $this->id . '.webm';
+    }
 }

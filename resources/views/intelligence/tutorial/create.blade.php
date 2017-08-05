@@ -33,13 +33,7 @@
         $('#fileupload').fileupload({
             url: '{{ route('tutorial.store.video', $intelligence->slug) }}',
             done: function (e, data) {
-                $.each(data.files, function (index, file) {
-                    var message = 'Upload complete: ' + file.name + ' (' +
-                        file.size + ' bytes)';
-                    $('<p/>').text(message).appendTo(document.body);
-                    console.log(message);
-                     $("#create-tutorial").prop('disabled', false);
-                });
+                 $("#create-tutorial").prop('disabled', false);
             }
         });
 
@@ -100,16 +94,16 @@
         </div>
         <br>
         <br>
-        <div class="form-group">
-            <video id="myVideo" class="video-js vjs-default-skin"></video>
-            <input id="fileupload" type="file" name="files[]" multiple>
-        </div>
         <form action="{{ route('tutorial.store',$intelligence->slug) }}" role="form" method="POST">
-            <div class="form-group">
+            <div class="form-group ">
                 <input name="title" type="text" required="required" class="form-control"
                        placeholder="Titulo del tutorial">
             </div>
+            <div class="form-group text-center">
 
+                <video id="myVideo" class="video-js vjs-default-skin" style="display:inline-block"></video>
+                <input id="fileupload" type="file" name="files[]" multiple>
+            </div>
             {{ csrf_field() }}
             <div class="form-group">
                 <button id="create-tutorial" type="submit" class="btn btn-primary pull-right" disabled>Crear tutorial</button>

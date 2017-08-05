@@ -26,7 +26,6 @@ class CommentController extends Controller
         $comment = new Comment;
         $comment->user_id = Auth::user()->id;
         $comment->tutorial_id = $tutorial->id;
-        $comment->url = $request->url;
         $comment->message = $request->message;
         $comment->save();
 

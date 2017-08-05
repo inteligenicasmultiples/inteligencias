@@ -60,7 +60,7 @@ class TutorialController extends Controller
 
             $files = $request->file('files');
             foreach ($files as $file) {
-                $fileName = 'tutorial_' . $tutorial->id . '.mp4';
+                $fileName = 'tutorial_' . $tutorial->id . '.webm';
                 $file->move('uploads', $fileName);
             }
 

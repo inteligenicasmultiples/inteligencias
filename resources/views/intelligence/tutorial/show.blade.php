@@ -159,9 +159,6 @@
                 <form action="{{ route('comment.store',[$intelligence->slug,$tutorial->id]) }}" role="form" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input name="url" placeholder="Url vdel video" class="form-control" required="required">
-                    </div>
-                    <div class="form-group">
                         <textarea id="message" name="message" placeholder="Mensaje" class="form-control" required="required"></textarea>
                     </div>
                     <div class="form-group">
@@ -177,13 +174,18 @@
                     @foreach($comments as $comment)
                         <tr>
                             <td>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ $comment->getYoutubeId() }}"></iframe>
+                                @if ($comment->has_video)
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="">
+                                                <video  controls width="300">
+                                                      <source src="{{ $comment->getVideoPath() }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                    </video>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="row">
                                     <div class="col-xs-12">
                                         {!! $comment->message !!}

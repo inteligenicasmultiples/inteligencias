@@ -24,9 +24,10 @@ class Tutorial extends Model
 
         return $vars['v'];
     }
+
     public function getVideoPath()
     {
-        return '/uploads/tutorial_' . $this->id . '.mp4';
+        return '/uploads/tutorial_' . $this->id . '.webm';
     }
 
     public function likes()
